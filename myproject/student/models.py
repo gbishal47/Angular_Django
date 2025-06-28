@@ -6,5 +6,5 @@ class StudentModel(models.Model):
     Id=models.AutoField(primary_key=True)
     Name=models.CharField(max_length=20)
     Age=models.IntegerField()
-    Description=models.CharField(max_length=20)
+    Course=models.CharField(max_length=20)
 
