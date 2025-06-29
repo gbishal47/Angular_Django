@@ -21,3 +21,25 @@ def student_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['DELETE'])
+def student_delete_list(request,pk):
+    try:
+        studentDetails=StudentModel.objects.get(pk=pk)
+    except studentDetails.DoesNotExist():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    studentDetails.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PUT'])
+def student_update_list(request,pk):
+    try:
+        studentDetails=StudentModel.objects.get(pk=pk)
+    except studentDetails.DoesNotExist():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    studentSerialize=studentSerializer(studentDetails,data=request.data)
+    if studentSerialize.is_valid():
+        studentSerialize.save()
+        return Response(studentSerialize.data, status=status.HTTP_201_CREATED)
+    return Response(studentSerialize.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
